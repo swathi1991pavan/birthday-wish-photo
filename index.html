@@ -138,9 +138,13 @@
             startConfetti();
 
             if(photoURL !== "") {
-                img.src = photoURL;
-                img.style.display = "block";
+                if(!photoURL.startsWith("http")) {  // if user entered a relative filename
+                photoURL = "images/" + photoURL;  // automatically add images folder
             }
+            img.src = photoURL;
+            img.style.display = "block";
+        }
+
         }
     }
 
