@@ -156,22 +156,7 @@
         }
     }
 
-    // URL parameter support (?name=Pavan&photo=pavan.jpg)
-    const params = new URLSearchParams(window.location.search);
-    const urlName = params.get("name");
-    const urlPhoto = params.get("photo");
-
-    if (urlName) {
-        nameText.innerText = urlName;
-        music.play().catch(e => console.log("Autoplay blocked, click 🎵 Music button to play"));
-        startConfetti();
-    }
-
-    if (urlPhoto) {
-        img.src = urlPhoto;
-        img.style.display = "block";
-    }
-
+  
     // Confetti Animation
     const canvas = document.getElementById("confetti");
     const ctx = canvas.getContext("2d");
@@ -205,6 +190,23 @@
         });
         requestAnimationFrame(animateConfetti);
     }
+
+      // URL parameter support (?name=Pavan&photo=pavan.jpg)
+    const params = new URLSearchParams(window.location.search);
+    const urlName = params.get("name");
+    const urlPhoto = params.get("photo");
+
+    if (urlName) {
+        nameText.innerText = urlName;
+        music.play().catch(e => console.log("Autoplay blocked, click 🎵 Music button to play"));
+        startConfetti();
+    }
+
+    if (urlPhoto) {
+        img.src = urlPhoto;
+        img.style.display = "block";
+    }
+
 </script>
 
 </body>
