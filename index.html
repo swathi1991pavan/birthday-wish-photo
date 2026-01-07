@@ -6,97 +6,98 @@
 <title>Happy Birthday</title>
 
 <style>
-    body {
-        margin: 0;
-        font-family: 'Segoe UI', sans-serif;
-        height: 100vh;
-        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-        color: white;
-        text-align: center;
-    }
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: white;
+    text-align: center;
+}
 
-    .container {
-        z-index: 2;
-        padding: 20px;
-    }
+.container {
+    z-index: 2;
+    padding: 20px;
+}
 
-    h1 {
-        font-size: 3rem;
-        animation: glow 2s infinite alternate;
-    }
+h1 {
+    font-size: 3rem;
+    animation: glow 2s infinite alternate;
+}
 
-    h2 {
-        font-size: 2.2rem;
-        margin-top: 10px;
-        color: #fff700;
-        animation: bounce 1.5s infinite;
-    }
+h2 {
+    font-size: 2.2rem;
+    margin-top: 10px;
+    color: #fff700;
+    animation: bounce 1.5s infinite;
+}
 
-    input {
-        padding: 12px;
-        border-radius: 8px;
-        border: none;
-        font-size: 1rem;
-        margin-top: 20px;
-        width: 220px;
-    }
+input {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    margin-top: 15px;
+    width: 220px;
+}
 
-    button {
-        margin-top: 15px;
-        padding: 12px 25px;
-        border: none;
-        border-radius: 8px;
-        background: #ff4081;
-        color: white;
-        font-size: 1rem;
-        cursor: pointer;
-    }
+button {
+    margin-top: 15px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    background: #ff4081;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
 
-    button:hover {
-        background: #e91e63;
-    }
+button:hover {
+    background: #e91e63;
+}
 
-    @keyframes glow {
-        from { text-shadow: 0 0 10px #fff; }
-        to { text-shadow: 0 0 25px #ff0; }
-    }
+@keyframes glow {
+    from { text-shadow: 0 0 10px #fff; }
+    to { text-shadow: 0 0 25px #ff0; }
+}
 
-    @keyframes bounce {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
-    }
+@keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
 
-    canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-        z-index: 1;
-    }
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+}
 
-    .music-btn {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: rgba(0,0,0,0.4);
-        padding: 10px 15px;
-        border-radius: 30px;
-        cursor: pointer;
-    }
+.music-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.4);
+    padding: 10px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    user-select: none;
+}
 
-    #customerPhoto {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        margin-top: 20px;
-        display: none;
-        object-fit: cover;
-        border: 3px solid #fff700;
-    }
+#customerPhoto {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-top: 20px;
+    display: none;
+    object-fit: cover;
+    border: 3px solid #fff700;
+}
 </style>
 </head>
 
@@ -108,105 +109,115 @@
     <h1>🎉 Happy Birthday 🎉</h1>
     <h2 id="nameText">Your Name</h2>
 
-    <img id="customerPhoto" src="" alt="Customer Photo">
+    <img id="customerPhoto" alt="Photo">
 
     <input type="text" id="nameInput" placeholder="Enter Name">
     <br>
-    <input type="text" id="photoInput" placeholder="Enter Photo URL (optional)">
+    <input type="text" id="photoInput" placeholder="Photo URL or filename">
     <br>
-    <button onclick="showName()">Celebrate 🎂</button>
+    <button onclick="celebrate()">Celebrate 🎂</button>
 </div>
 
 <div class="music-btn" onclick="toggleMusic()">🎵 Music</div>
 
 <audio id="bgMusic" loop>
-  <source src="audio/happy-birthday.mp3" type="audio/mpeg">
+    <source src="audio/happy-birthday.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-    const nameText = document.getElementById("nameText");
-    const music = document.getElementById("bgMusic");
-    const img = document.getElementById("customerPhoto");
+const nameText = document.getElementById("nameText");
+const music = document.getElementById("bgMusic");
+const img = document.getElementById("customerPhoto");
 
-    function showName() {
-        const name = document.getElementById("nameInput").value.trim();
-        const photoURL = document.getElementById("photoInput").value.trim();
+/* 🎂 Celebrate */
+function celebrate() {
+    const name = document.getElementById("nameInput").value.trim();
+    let photo = document.getElementById("photoInput").value.trim();
 
-        if (name !== "") {
-            nameText.innerText = name;
-            music.play().catch(e => console.log("Autoplay blocked, click 🎵 Music button to play"));
-            startConfetti();
+    if (!name) return;
 
-            if(photoURL !== "") {
-                if(!photoURL.startsWith("http")) {  // if user entered a relative filename
-                photoURL = "images/" + photoURL;  // automatically add images folder
-            }
-            img.src = photoURL;
-            img.style.display = "block";
+    nameText.innerText = name;
+    startConfetti();
+
+    music.play().catch(() => {});
+
+    if (photo) {
+        if (!photo.startsWith("http")) {
+            photo = "images/" + photo;
         }
-
-        }
-    }
-
-    function toggleMusic() {
-        if (music.paused) {
-            music.play();
-        } else {
-            music.pause();
-        }
-    }
-
-  
-    // Confetti Animation
-    const canvas = document.getElementById("confetti");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const confettiPieces = [];
-
-    function startConfetti() {
-        for (let i = 0; i < 200; i++) {
-            confettiPieces.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                r: Math.random() * 6 + 2,
-                d: Math.random() * 10,
-                color: `hsl(${Math.random() * 360},100%,50%)`
-            });
-        }
-        animateConfetti();
-    }
-
-    function animateConfetti() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        confettiPieces.forEach(p => {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = p.color;
-            ctx.fill();
-            p.y += Math.cos(p.d) + 2;
-            if (p.y > canvas.height) p.y = 0;
-        });
-        requestAnimationFrame(animateConfetti);
-    }
-
-      // URL parameter support (?name=Pavan&photo=pavan.jpg)
-    const params = new URLSearchParams(window.location.search);
-    const urlName = params.get("name");
-    const urlPhoto = params.get("photo");
-
-    if (urlName) {
-        nameText.innerText = urlName;
-        music.play().catch(e => console.log("Autoplay blocked, click 🎵 Music button to play"));
-        startConfetti();
-    }
-
-    if (urlPhoto) {
-        img.src = urlPhoto;
+        img.src = photo;
         img.style.display = "block";
     }
+}
 
+/* 🎵 Music Toggle */
+function toggleMusic() {
+    if (music.paused) {
+        music.play();
+        document.querySelector(".music-btn").innerText = "⏸ Music";
+    } else {
+        music.pause();
+        document.querySelector(".music-btn").innerText = "🎵 Music";
+    }
+}
+
+/* 🎉 Confetti */
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let confetti = [];
+
+function startConfetti() {
+    confetti = [];
+    for (let i = 0; i < 200; i++) {
+        confetti.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 6 + 2,
+            d: Math.random() * 10,
+            color: `hsl(${Math.random()*360},100%,50%)`
+        });
+    }
+    animateConfetti();
+}
+
+function animateConfetti() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    confetti.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+        p.y += Math.cos(p.d) + 2;
+        if (p.y > canvas.height) p.y = 0;
+    });
+    requestAnimationFrame(animateConfetti);
+}
+
+/* 🔗 URL Params support */
+const params = new URLSearchParams(window.location.search);
+const urlName = params.get("name");
+let urlPhoto = params.get("photo");
+
+if (urlName) {
+    nameText.innerText = urlName;
+    startConfetti();
+}
+
+if (urlPhoto) {
+    if (!urlPhoto.startsWith("http")) {
+        urlPhoto = "images/" + urlPhoto;
+    }
+    img.src = urlPhoto;
+    img.style.display = "block";
+}
+
+/* ▶️ Auto-play after first click anywhere */
+document.addEventListener("click", () => {
+    if (music.paused) music.play();
+}, { once: true });
 </script>
 
 </body>
