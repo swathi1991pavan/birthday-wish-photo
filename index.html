@@ -3,100 +3,166 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
 <title>Happy Birthday</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-
 <style>
-/* ===== FULL SCREEN BACKGROUND ===== */
 body {
     margin: 0;
-    width: 100vw;
+    font-family: 'Segoe UI', sans-serif;
     height: 100vh;
+
+    /* 🎂 Birthday Template Background */
+    background: url("images/birthday-bg.png") no-repeat center center fixed;
+    background-size: cover;
 
     display: flex;
     justify-content: center;
     align-items: center;
-
-    background: url("images/bg-full.jpg") no-repeat center center;
-    background-size: cover;
-
     overflow: hidden;
+    color: #0b2c4d;
+    text-align: center;
 }
 
-/* ===== BIRTHDAY IMAGE ===== */
-.card {
-    position: relative;
+/* Light overlay for readability */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255,0.2);
+    z-index: 0;
 }
 
-.card img {
-    max-width: 90vw;
-    max-height: 90vh;
-    width: auto;
-    height: auto;
-    display: block;
+.container {
+    z-index: 2;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* ===== NAME TEXT ===== */
-.name {
-    position: absolute;
-    top: 44%;
-    left: 50%;
-    transform: translateX(-50%);
+h1 {
+    font-size: 2.8rem;
+    color: #1c4fa3;
+}
 
+h2 {
     font-family: 'Great Vibes', cursive;
-    font-size: clamp(28px, 4vw, 48px);
-    color: #2f3a6f;
-    white-space: nowrap;
+    font-size: 3rem;
+     margin-top: 100px; 
+
+    color: #2f3a6f;        /* soft indigo like image */
+    font-weight: 600;     /* NOT bold */
+
+    letter-spacing: 0.5px;
+
+    text-shadow: 
+        0 2px 3px rgba(47, 58, 111, 0.25); /* very soft shadow */
 }
-
-/* ===== PHOTO ===== */
-.photo {
-    position: absolute;
-    bottom: 18%;
-    left: 50%;
-    transform: translateX(-50%);
-
-    width: clamp(80px, 12vw, 140px);
-    height: clamp(80px, 12vw, 140px);
-
+/* Photo style */
+#customerPhoto {
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
-    border: 3px solid #2f3a6f;
+    margin-top: 20px;
+    display: none;
     object-fit: cover;
+    border: 4px solid #1c4fa3;
+    background: white;
 }
 
-/* ===== MUSIC BUTTON ===== */
+/* Confetti */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Music button */
 .music-btn {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background: rgba(47,58,111,0.9);
-    color: white;
+    background: rgba(28, 79, 163, 0.85);
     padding: 10px 16px;
     border-radius: 30px;
     cursor: pointer;
-    font-size: 0.9rem;
+    user-select: none;
+    color: white;
+    z-index: 3;
+    font-size: 0.95rem;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-    <img src="images/birthday-card.png" alt="Birthday Card">
+<canvas id="confetti"></canvas>
 
-    <div class="name" id="nameText">Your Name</div>
-    <img class="photo" id="photoImg" src="" alt="Photo">
+<div class="container">
+   
+    <h2 id="nameText">Your Name</h2>
+    <img id="customerPhoto" alt="Photo">
 </div>
 
 <div class="music-btn" onclick="toggleMusic()">🎵 Music</div>
 
-<audio id="music" loop>
+<audio id="bgMusic" loop>
     <source src="audio/happy-birthday-1.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-const params = new URLSearchParams(window.location.search);
+const nameText = document.getElementById("nameText");
+const music = document.getElementById("bgMusic");
+const img = document.getElementById("customerPhoto");
 
-const name = params.get("name");
-const photo = param
+/* 🎉 Confetti Setup */
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let confetti = [];
+
+
+
+/* 🎵 Music Toggle */
+function toggleMusic() {
+    if (music.paused) {
+        music.play();
+        document.querySelector(".music-btn").innerText = "⏸ Music";
+    } else {
+        music.pause();
+        document.querySelector(".music-btn").innerText = "🎵 Music";
+    }
+}
+
+/* 🔗 URL Parameters */
+const params = new URLSearchParams(window.location.search);
+const urlName = params.get("name");
+let urlPhoto = params.get("photo");
+
+if (urlName) {
+    nameText.innerText = urlName;
+   // startConfetti();
+}
+
+if (urlPhoto) {
+    if (!urlPhoto.startsWith("http")) {
+        urlPhoto = "images/" + urlPhoto;
+    }
+    img.src = urlPhoto;
+    img.style.display = "block";
+}
+
+/* ▶️ Auto-play after first click */
+document.addEventListener("click", () => {
+    if (music.paused) music.play();
+}, { once: true });
+</script>
+
+</body>
+</html>
