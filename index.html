@@ -47,7 +47,28 @@ h1 {
     color: #1c4fa3;
 }
 
-h2 {
+    .happy {
+    font-size: 1.9rem;
+    letter-spacing: 6px;
+    color: #2f3a6f;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+/* Birthday */
+.birthday {
+    font-family: 'Great Vibes', cursive;
+    font-size: 4.2rem;
+    color: #2f3a6f;
+    font-weight: 400;
+    line-height: 1;
+    margin: 0;
+
+    text-shadow:
+        0 3px 4px rgba(47,58,111,0.35);
+}
+
+.name {
     font-family: 'Great Vibes', cursive;
     font-size: 3rem;
      margin-top: 100px; 
@@ -103,9 +124,14 @@ canvas {
 <canvas id="confetti"></canvas>
 
 <div class="container">
-   
-    <h2 id="nameText">Your Name</h2>
+    <div class="happy">HAPPY</div>
+
+    <div class="birthday">Birthday</div>
+
+    <div class="name" id="nameText">Your Name</div>
+
     <img id="customerPhoto" alt="Photo">
+    
 </div>
 
 <div class="music-btn" onclick="toggleMusic()">🎵 Music</div>
