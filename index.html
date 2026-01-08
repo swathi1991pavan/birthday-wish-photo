@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 
 <title>Happy Birthday</title>
 
@@ -68,24 +69,23 @@ h1 {
     text-shadow: 
         2px 4px 6px rgba(0,0,0,0.2); /* subtle shadow for depth */
 }
-    .birthday {
-    /* Use a thicker, brush-style font */
-    font-family: 'Yellowtail', cursive; 
-    font-size: 5rem;
-    color: #1a237e; /* Darker blue from the image */
-    font-weight: normal; /* Brush fonts usually don't need 'bold' */
-    line-height: 1.2;
-    margin: 0;
-    
-    /* This creates the 'layered' hard shadow look */
-    text-shadow: 
-        4px 4px 0px rgba(47, 58, 111, 0.3); 
-        
-    /* Optional: Slight rotation to match the 'handwritten' vibe */
-    display: inline-block;
-    transform: rotate(-2deg);
-}
+ .birthday {
+    /* Step 1: Use a 'bouncy' brush script */
+    font-family: 'Dancing Script', cursive; 
+    font-size: 6rem;
+    color: #1a1a4b;         /* Dark Navy blue */
+    font-weight: 700;       /* Keep it bold for the 'marker' look */
+    line-height: 1.1;
+    letter-spacing: -1px;   /* Tighten letters so they connect better */
+    font-style: italic;
 
+    /* Step 2: Create the layered shadow effect */
+    /* This creates a sharp, non-blurry duplicate underneath */
+    text-shadow: 
+        2px 2px 0px #ffffff,    /* Optional: tiny white outline to separate layers */
+        5px 5px 0px #7b86b8,    /* The main light-blue shadow layer */
+        8px 8px 12px rgba(0,0,0,0.1); /* Very soft glow at the bottom */
+}
 
 .name {
     font-family: 'Great Vibes', cursive;
