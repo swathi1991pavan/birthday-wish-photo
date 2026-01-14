@@ -208,7 +208,7 @@ if (urlPhoto) {
 const params = new URLSearchParams(window.location.search);
 const clientId = params.get("id");
 
-fetch("clients.json")
+fetch("./clients.json")
     .then(response => response.json())
     .then(data => {
         if (clientId && data[clientId]) {
