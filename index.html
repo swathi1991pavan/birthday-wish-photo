@@ -186,7 +186,7 @@ function toggleMusic() {
     }
 }
 
-/* 🔗 URL Parameters */
+/* 🔗 URL Parameters 
 const params = new URLSearchParams(window.location.search);
 const urlName = params.get("name");
 let urlPhoto = params.get("photo");
@@ -202,7 +202,33 @@ if (urlPhoto) {
     }
     img.src = urlPhoto;
     img.style.display = "block";
-}
+} */
+
+    /* 🔗 LOAD CLIENT BY ID */
+const params = new URLSearchParams(window.location.search);
+const clientId = params.get("id");
+
+fetch("clients.json")
+    .then(response => response.json())
+    .then(data => {
+        if (clientId && data[clientId]) {
+            const client = data[clientId];
+
+            nameText.innerText = client.name;
+
+            if (client.photo) {
+                img.src = "images/" + client.photo;
+                img.style.display = "block";
+            }
+        } else {
+            nameText.innerText = "Happy Birthday 🎉";
+        }
+    })
+    .catch(error => {
+        console.error("JSON load error", error);
+        nameText.innerText = "Happy Birthday 🎂";
+    });
+
 
 /* ▶️ Auto-play after first click */
 document.addEventListener("click", () => {
